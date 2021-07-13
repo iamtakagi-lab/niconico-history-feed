@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  app:
+    container_name: niconico-history-feed
+    build: .
+    environment:
+      NICONICO_EMAIL: xxx
+      NICONICO_PASSWORD: xxx
+      # カンマで区切ると複数追加できます
+      DISCORD_WEBHOOK_URLS: https://discord.com/api/webhooks/xxx/xxx
+      # 監視する間隔秒数
+      WATCH_INTERVAL: 60
+    volumes:
+      - ./data:/data
