@@ -7,5 +7,5 @@ nano docker-compose.example.yml
 docker-compose up -d --build
 ```
 
-# LICENSE
+## LICENSE
 iamtakagi/niconico-history-feed is provided under the MIT license.
