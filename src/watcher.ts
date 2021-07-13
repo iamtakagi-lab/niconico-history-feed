@@ -13,8 +13,16 @@ export default (client: NiconicoClient) => {
       fs.readFileSync('./data/history.json', 'utf8')
     )
 
-    if (
-      storedHistoryItems.length <= 0 ||
+    if(storedHistoryItems.length <= 0) {
+      env.DISCORD_WEBHOOK_URLS.split(',').map(async (url) => {
+        const splitUrl = url.split('/')
+        const webhook = new WebhookClient(splitUrl[5], splitUrl[6])
+        newHistoryItems.map((item) => {
+          webhook.send('https://www.nicovideo.jp/watch/' + item.video_id)
+        })
+      })
+    }
+    else if (
       newHistoryItems != storedHistoryItems
     ) {
     　//新差分を抽出
@@ -27,10 +35,9 @@ export default (client: NiconicoClient) => {
           webhook.send('https://www.nicovideo.jp/watch/' + item.video_id)
         })
       })
-
-      //新データ書き込み
-      fs.writeFileSync('./data/history.json', JSON.stringify(newHistoryItems))
     }
+    //新データ書き込み
+    fs.writeFileSync('./data/history.json', JSON.stringify(newHistoryItems))
   }
 
   setInterval(watch, env.WATCH_INTERVAL_SECONDS * 1000)
