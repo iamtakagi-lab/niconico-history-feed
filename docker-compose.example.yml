@@ -11,4 +11,4 @@ services:
       # 監視する間隔秒数
       WATCH_INTERVAL: 60
     volumes:
-      - ./data:/data
+      - ./data:/app/data
