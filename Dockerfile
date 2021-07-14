@@ -1,9 +1,9 @@
 FROM node:16
 
-WORKDIR /tmp/build
-COPY package.json yarn.lock ./
+WORKDIR /app
+COPY package.json yarn.lock /app/
 RUN yarn
-COPY ./ ./
+COPY . /app/
 RUN yarn build
 
 CMD [ "yarn", "start" ]
