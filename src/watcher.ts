@@ -24,7 +24,6 @@ export default (client: NiconicoClient) => {
       //新差分を抽出
       //最も古い履歴から順に削除されるため、storedHistoryItemsの先頭を無視
       items = compare(storedHistoryItems, newHistoryItems)
-      console.log(items)
     }
 
     if (items.length > 0) {
