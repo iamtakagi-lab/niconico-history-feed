@@ -22,8 +22,8 @@ export default (client: NiconicoClient) => {
     }
     else if (newHistoryItems != storedHistoryItems) {
       //新差分を抽出
-      //最も古い履歴から順に削除されるため、storedHistoryItemsの先頭を無視
-      items = compare(storedHistoryItems, newHistoryItems)
+      //最も古い履歴から順に削除されるため、先頭を無視
+      items = compare(storedHistoryItems.slice(1, storedHistoryItems.length), newHistoryItems.slice(1, newHistoryItems.length))
     }
 
     if (items.length > 0) {
