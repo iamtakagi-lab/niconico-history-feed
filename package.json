@@ -1,5 +1,6 @@
 {
   "name": "niconico-history-feed",
+  "version": "0.0.1",
   "author": "takagi",
   "license": "MIT",
   "scripts": {
