@@ -3,12 +3,13 @@ import { WebhookClient } from 'discord.js'
 import env from './env'
 import NiconicoClient from './niconico-client'
 import compare from './comparator'
-import sort from './sort'
 
 export default (client: NiconicoClient) => {
   const watch = async () => {
     const data = await client.getVideoViewHistory()
-    const newHistoryItems = sort(data.history)
+
+    //日付新しい順になってる
+    const newHistoryItems = data.history
 
     //前データ読み込み
     const storedHistoryItems = JSON.parse(
@@ -22,8 +23,10 @@ export default (client: NiconicoClient) => {
     }
     else if (newHistoryItems != storedHistoryItems) {
       //新差分を抽出
-      //最も古い履歴から順に削除されるため、先頭を無視
-      items = compare(storedHistoryItems.slice(1, storedHistoryItems.length), newHistoryItems.slice(1, newHistoryItems.length))
+      //古い順から消えていく
+      //最後の要素を消す
+      storedHistoryItems.pop()
+      items = compare(storedHistoryItems, newHistoryItems)
     }
 
     if (items.length > 0) {
