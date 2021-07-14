@@ -3,6 +3,7 @@ import { WebhookClient } from 'discord.js'
 import env from './env'
 import NiconicoClient from './niconico-client'
 import compare from './comparator'
+import sort from './sort'
 
 export default (client: NiconicoClient) => {
   const watch = async () => {
@@ -33,7 +34,7 @@ export default (client: NiconicoClient) => {
       env.DISCORD_WEBHOOK_URLS.split(',').map(async (url) => {
         const splitUrl = url.split('/')
         const webhook = new WebhookClient(splitUrl[5], splitUrl[6])
-        items.map((item) => {
+        sort(items).map((item) => {
           webhook.send(`https://nicovideo.jp/watch/${item.video_id}`)
         })
       })
