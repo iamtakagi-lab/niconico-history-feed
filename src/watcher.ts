@@ -2,40 +2,41 @@ import fs from 'fs'
 import { WebhookClient } from 'discord.js'
 import env from './env'
 import NiconicoClient from './niconico-client'
-import { compare } from './object-comparator'
+import compare from './comparator'
+import sort from './sort'
 
 export default (client: NiconicoClient) => {
   const watch = async () => {
-    const newHistoryItems = await (await client.getVideoViewHistory()).history
+    const data = await client.getVideoViewHistory()
+    const newHistoryItems = sort(data.history)
 
     //前データ読み込み
     const storedHistoryItems = JSON.parse(
       fs.readFileSync('./data/history.json', 'utf8')
     )
 
-    if(storedHistoryItems.length <= 0) {
-      env.DISCORD_WEBHOOK_URLS.split(',').map(async (url) => {
-        const splitUrl = url.split('/')
-        const webhook = new WebhookClient(splitUrl[5], splitUrl[6])
-        newHistoryItems.map((item) => {
-          webhook.send('https://www.nicovideo.jp/watch/' + item.video_id)
-        })
-      })
-    }
-    else if (
-      newHistoryItems != storedHistoryItems
-    ) {
-    　//新差分を抽出
-      const c = compare(storedHistoryItems, newHistoryItems)
+    let items = []
 
+    if (storedHistoryItems.length <= 0) {
+      items = newHistoryItems
+    }
+    else if (newHistoryItems != storedHistoryItems) {
+      //新差分を抽出
+      //最も古い履歴から順に削除されるため、storedHistoryItemsの先頭を無視
+      items = compare(storedHistoryItems, newHistoryItems)
+      console.log(items)
+    }
+
+    if (items.length > 0) {
       env.DISCORD_WEBHOOK_URLS.split(',').map(async (url) => {
         const splitUrl = url.split('/')
         const webhook = new WebhookClient(splitUrl[5], splitUrl[6])
-        c.map((item) => {
-          webhook.send('https://www.nicovideo.jp/watch/' + item.video_id)
+        items.map((item) => {
+          webhook.send(`https://nicovideo.jp/watch/${item.video_id}`)
         })
       })
     }
+
     //新データ書き込み
     fs.writeFileSync('./data/history.json', JSON.stringify(newHistoryItems))
   }
