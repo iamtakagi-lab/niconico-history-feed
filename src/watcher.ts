@@ -33,6 +33,8 @@ export default (client: NiconicoClient) => {
       env.DISCORD_WEBHOOK_URLS.split(',').map(async (url) => {
         const splitUrl = url.split('/')
         const webhook = new WebhookClient(splitUrl[5], splitUrl[6])
+
+        //最新の動画履歴が最後に送信されるように
         items.reverse().map((item) => {
           webhook.send(`https://nicovideo.jp/watch/${item.video_id}`)
         })
