@@ -1,8 +1,10 @@
-import fs from 'fs'
+import fs, { link } from 'fs'
 import { WebhookClient } from 'discord.js'
 import env from './env'
 import NiconicoClient from './niconico-client'
 import compare from './comparator'
+import links from './links'
+import send from './send'
 
 export default (client: NiconicoClient) => {
   const watch = async () => {
@@ -20,8 +22,7 @@ export default (client: NiconicoClient) => {
 
     if (storedHistoryItems.length <= 0) {
       items = newHistoryItems
-    }
-    else if (newHistoryItems != storedHistoryItems) {
+    } else if (newHistoryItems != storedHistoryItems) {
       //新差分を抽出
       //古い順から消えていく
       //最後の要素を消す
@@ -36,7 +37,9 @@ export default (client: NiconicoClient) => {
 
         //最新の動画履歴が最後に送信されるように
         items.reverse().map((item) => {
-          webhook.send(`https://nicovideo.jp/watch/${item.video_id}`)
+          links(item).then((links) => {
+            send(webhook, links)
+          })
         })
       })
     }
