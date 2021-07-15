@@ -9,7 +9,10 @@ export default {
   DISCORD_WEBHOOK_URLS: process.env.DISCORD_WEBHOOK_URLS
     ? process.env.DISCORD_WEBHOOK_URLS
     : null,
-    WATCH_INTERVAL_SECONDS: process.env.WATCH_INTERVAL_SECONDS
+  WATCH_INTERVAL_SECONDS: process.env.WATCH_INTERVAL_SECONDS
     ? Number(process.env.WATCH_INTERVAL_SECONDS)
     : Number(60),
+  SEND_SCRAPBOX_LINK: process.env.SEND_SCRAPBOX_LINK
+    ? Boolean(process.env.SEND_SCRAPBOX_LINK)
+    : false,
 }
