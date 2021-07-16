@@ -3,9 +3,8 @@ import env from './env'
 import { Links } from './typings/struct'
 
 export default (webhook: WebhookClient, links: Links) => {
-  webhook.send(
-    `${links.video_url}${
-      env.SEND_SCRAPBOX_LINK ? '\n' + links.scrapbox_link : ''
-    }`
-  )
+  const message = env.MESSAGE_FORMAT
+    .replace('%video_url%', links.video_url)
+    .replace('%scrapbox_link%', links.scrapbox_link)
+  webhook.send(message)
 }

@@ -10,7 +10,6 @@ services:
       DISCORD_WEBHOOK_URLS: https://discord.com/api/webhooks/xxx/xxx
       # 監視する間隔秒数
       WATCH_INTERVAL: 60
-      # nicothumb2imgを使用してScrapbox用のリンクを送信
-      SEND_SCRAPBOX_LINK: 'false'
+      MESSAGE_FORMAT: '%video_url% %scrapbox_link%'
     volumes:
       - ./data:/app/data
