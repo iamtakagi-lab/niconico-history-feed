@@ -9,7 +9,7 @@ services:
       # カンマで区切ると複数追加できます
       DISCORD_WEBHOOK_URLS: https://discord.com/api/webhooks/xxx/xxx
       # 監視する間隔秒数
-      WATCH_INTERVAL: 60
+      WATCH_INTERVAL_SECONDS: 60
       MESSAGE_FORMAT: '%video_url% %scrapbox_link%'
     volumes:
       - ./data:/app/data
