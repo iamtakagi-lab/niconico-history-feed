@@ -1,4 +1,4 @@
-import fs, { link } from 'fs'
+import fs from 'fs'
 import { WebhookClient } from 'discord.js'
 import env from './env'
 import NiconicoClient from './niconico-client'
