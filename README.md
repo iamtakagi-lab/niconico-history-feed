@@ -1,5 +1,5 @@
 # niconico-history-feed
-ニコニコ動画の再生履歴を Discord に流します
+ニコニコ動画の再生履歴を Discord に送信します
 
 ## Installation
 
