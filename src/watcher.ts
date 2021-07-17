@@ -25,9 +25,11 @@ export default (client: NiconicoClient) => {
     } else if (newHistoryItems != storedHistoryItems) {
       //新差分を抽出
       //古い順から消えていく
-      //最後の要素を消す
-      storedHistoryItems.pop()
-      items = compare(storedHistoryItems, newHistoryItems)
+      const a = compare(storedHistoryItems, newHistoryItems)
+      //消えた部分を付け足す
+      const c = newHistoryItems.concat(storedHistoryItems.splice(0, -(a.length)))
+      //再比較
+      items = compare(storedHistoryItems, c)
     }
 
     if (items.length > 0) {
