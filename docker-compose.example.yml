@@ -13,3 +13,4 @@ services:
       MESSAGE_FORMAT: '%video_url% %scrapbox_link%'
     volumes:
       - ./data:/app/data
+    restart: always
