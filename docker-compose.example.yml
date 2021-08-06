@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  app:
-    container_name: niconico-history-feed
+  niconico-history-feed:
+    image: iamtakagi/niconico-history-feed
     build: .
     environment:
       NICONICO_EMAIL: xxx
